@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import { useContext } from "react";
+import TemaContext, { TemaProvider } from "./src/context/TemaContext";
+import { Provider, Surface, Text } from "react-native-paper";
+
 
 export default function App() {
+  const temaContext = useContext(TemaContext);
+
+  if (!temaContext) {
+    return null; // ou exibir algum fallback
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <TemaProvider>
+      <Provider
+        theme={useContext(temaContext).tema}
+      >
+        <HomeScreen />
+      </Provider>
+    </TemaProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+function HomeScreen() {
+  return (
+    <Surface>
+      <Text>Olá </Text>
+    </Surface>
+  )
+}
